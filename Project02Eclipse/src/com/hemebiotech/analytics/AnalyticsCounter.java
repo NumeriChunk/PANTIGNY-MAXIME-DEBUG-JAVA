@@ -7,9 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0;	// initialize to 0
-	private static int rashCount = 0;		// initialize to 0
-	private static int pupilCount = 0;		// initialize to 0
+	public static int headacheCount = 0;
+	public static int rashCount = 0;
+	public static int pupilCount = 0;
 	
 	public static void main(String args[]) throws Exception {
 		
