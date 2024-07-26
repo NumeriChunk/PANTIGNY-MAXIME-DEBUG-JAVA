@@ -12,13 +12,19 @@ public class WriteSymptomDataToFile implements ISymptomWriter{
 		try {
 			
 			FileWriter fileWriter = new FileWriter("result.out");
-			
 			BufferedWriter writer = new BufferedWriter(fileWriter);
 			
-			writer.write("headache: " + AnalyticsCounter.headacheCount + "\n");
-			writer.write("rash: " + AnalyticsCounter.rashCount + "\n");
-			writer.write("dialated pupils: " + AnalyticsCounter.pupilCount + "\n");
+			symptoms.forEach((key, value) -> {
+				try {
+					writer.write(key + " : " + value +"\n");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+			
+
 			writer.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
