@@ -5,6 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Simple brute force implementation
+ *
+ */
 public class WriteSymptomDataToFile implements ISymptomWriter{
 	
 	@Override

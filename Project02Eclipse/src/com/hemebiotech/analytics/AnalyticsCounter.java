@@ -7,40 +7,34 @@ import java.util.TreeMap;
 
 public class AnalyticsCounter {
 	
-	//
 	public ISymptomReader reader;
 	public ISymptomWriter writer;
 	
-	//Point d'entré
-	public static void main(String args[]) throws Exception {
-		
-		//Lecture du fichier symtoms.txt
-		ReadSymptomDataFromFile symptomsReader = new ReadSymptomDataFromFile("symptoms.txt");
-		symptomsReader.getSymptoms();
-		
-		WriteSymptomDataToFile symptomsWriter = new WriteSymptomDataToFile();
-		symptomsWriter.writeSymptoms(sortSymptoms(countSymptoms(symptomsReader.getSymptoms())));
-		/*
-		//Ecriture du résultat.
-		WriteSymptomDataToFile writeTheSymtoms = new WriteSymptomDataToFile();
-		writeTheSymtoms.WriteSymptoms(countSymptoms(readTheSymptoms.GetSymptoms()));
-		*/
-
-	}
-	
-	//Constructeur classe Main
+	/**
+	 * Constructor of the AnalyticsCounter
+	 * @param reader
+	 * @param writer
+	 */
 	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer) {
 		this.reader = reader;
 		this.writer = writer;
 	}
 	
-	//Récupérer la liste 
+	/**
+	 * Get all symptoms from file
+	 * @return Array List of all symptoms.
+	 */
 	public List<String> getSymptoms () {
 		return reader.getSymptoms();
 	}
 	
-	//Compter les occurences
-	public static Map<String, Integer> countSymptoms(List<String> symptoms){
+	/**
+	 * Take all the symptoms from List.
+	 * Convert to Map collection that will name the key by symptoms and occurrence as value.
+	 * @param Raw List of symptoms.
+	 * @return Collection with occurrence of symptoms.
+	 */
+	public Map<String, Integer> countSymptoms(List<String> symptoms){
 		
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		
@@ -57,20 +51,25 @@ public class AnalyticsCounter {
 			
 	}
 	
-	//Trier les symptômes et les occurences.
-	public static Map<String, Integer> sortSymptoms(Map<String, Integer> symptoms){
+	/**
+	 * Sort alphabetical the collection of symptoms.
+	 * @param Take Map of unsorted data.
+	 * @return Map of sorted data.
+	 */
+	public Map<String, Integer> sortSymptoms(Map<String, Integer> symptoms){
 		
-		//Déclaration d'une treemap permettant de trier les éléments.
 		Map<String, Integer> sortedMap = new TreeMap<String, Integer>(symptoms);
 		
 		return sortedMap;
 		
 	}
 	
-	//Ecrire le résultat
+	/**
+	 * Write all of the collection into new file named "result.out"
+	 * @param Map of symptoms to write in new file.
+	 */
 	public void writeSymptoms(Map<String, Integer>symptoms) {
-		ISymptomWriter objet = new WriteSymptomDataToFile();
-		objet.writeSymptoms(symptoms);
+		writer.writeSymptoms(symptoms);
 	}
 }	
 	
