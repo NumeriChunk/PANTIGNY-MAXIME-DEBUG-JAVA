@@ -9,4 +9,5 @@ Project02Eclipse/.project
 .settings/
 bin/
 tmp/
+.idea
 

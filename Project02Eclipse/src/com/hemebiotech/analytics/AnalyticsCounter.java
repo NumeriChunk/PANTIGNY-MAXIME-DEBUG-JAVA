@@ -1,5 +1,6 @@
 package com.hemebiotech.analytics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,8 +8,10 @@ import java.util.TreeMap;
 
 public class AnalyticsCounter {
 	
-	public ISymptomReader reader;
-	public ISymptomWriter writer;
+	private ISymptomReader reader;
+	private ISymptomWriter writer;
+	private Map<String, Integer> mapSymptoms;
+	private List<String> listSymptoms;
 	
 	/**
 	 * Constructor of the AnalyticsCounter
@@ -18,14 +21,16 @@ public class AnalyticsCounter {
 	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer) {
 		this.reader = reader;
 		this.writer = writer;
+		this.mapSymptoms = new HashMap<String, Integer>();
+		this.listSymptoms = new ArrayList<String>();
 	}
-	
+
 	/**
 	 * Get all symptoms from file
 	 * @return Array List of all symptoms.
 	 */
-	public List<String> getSymptoms () {
-		return reader.getSymptoms();
+	public void getSymptoms () {
+		setListSymptoms(getReader().getSymptoms());
 	}
 	
 	/**
@@ -34,21 +39,17 @@ public class AnalyticsCounter {
 	 * @param Raw List of symptoms.
 	 * @return Collection with occurrence of symptoms.
 	 */
-	public Map<String, Integer> countSymptoms(List<String> symptoms){
+	public void countSymptoms(){
 		
-		Map<String, Integer> result = new HashMap<String, Integer>();
-		
-		for(int i =0 ; i<symptoms.size() ; i++) {
-			if (result.containsKey(symptoms.get(i))) {
-				result.put(symptoms.get(i), result.get(symptoms.get(i))+1);
+		for(int i =0 ; i<getListSymptoms().size() ; i++) {
+			if (getMapSymptoms().containsKey(getListSymptoms().get(i))) {
+				getMapSymptoms().put(getListSymptoms().get(i), getMapSymptoms().get(getListSymptoms().get(i))+1);
 				continue;
 			}else {
-				result.put(symptoms.get(i), 1);
+				getMapSymptoms().put(getListSymptoms().get(i), 1);
 			}
-		}
-		
-		return result;
 			
+		}	
 	}
 	
 	/**
@@ -56,11 +57,9 @@ public class AnalyticsCounter {
 	 * @param Take Map of unsorted data.
 	 * @return Map of sorted data.
 	 */
-	public Map<String, Integer> sortSymptoms(Map<String, Integer> symptoms){
+	public void sortSymptoms(){
 		
-		Map<String, Integer> sortedMap = new TreeMap<String, Integer>(symptoms);
-		
-		return sortedMap;
+		setMapSymptoms(new TreeMap<String, Integer>(getMapSymptoms()));
 		
 	}
 	
@@ -68,8 +67,32 @@ public class AnalyticsCounter {
 	 * Write all of the collection into new file named "result.out"
 	 * @param Map of symptoms to write in new file.
 	 */
-	public void writeSymptoms(Map<String, Integer>symptoms) {
-		writer.writeSymptoms(symptoms);
+	public void writeSymptoms() {
+		getWriter().writeSymptoms(this.mapSymptoms);
+	}
+
+	public Map<String, Integer> getMapSymptoms() {
+		return mapSymptoms;
+	}
+
+	public void setMapSymptoms(Map<String, Integer> mapSymptoms) {
+		this.mapSymptoms = mapSymptoms;
+	}
+
+	public List<String> getListSymptoms() {
+		return listSymptoms;
+	}
+
+	public void setListSymptoms(List<String> listSymptoms) {
+		this.listSymptoms = listSymptoms;
+	}
+
+	public ISymptomReader getReader() {
+		return reader;
+	}
+
+	public ISymptomWriter getWriter() {
+		return writer;
 	}
 }	
 	
